@@ -1,0 +1,170 @@
+SQL
+------------------------
+SQL -> Structured Query Language
+PL/SQL -> Procedural Language or Structured Query Language
+
+Database -> A place where we are storing our data.
+
+Before the database the information is stored in files, but the main 
+  drawback of storing the information in files is there is no security for the files.
+
+Different Database's 
+-----------
+->Oracle -> it is a software which manages the database.
+->MySQL
+->SQL Server
+->PostgreSQL
+->RDS
+->DB2
+
+SQL -> It is a language which is used to interact with the database.
+The user can interact with the database like oracle using SQL Language.
+
+NoSQL Database -> No Structured Query Language. It can handle large amount of data.
+
+stores info in the form of 
+a) key-value pairs
+b) Graph
+c) Document Oriented
+d) Wide Column
+
+Examples of NoSQL DB's
+1) MongoDB
+2) Cassandra
+
+SQL database stores/performs operations on strucured data.
+NoSQL performs on unstructured data.
+
+Structured -> Clear organization of data (Ex: Table format)
+Unstructured -> Data in the form of image, video or audio...
+
+Types of Database's 
+----------------------
+1) OLTP (Online Transaction Processing) [used for day to day transactions]
+2) OLAP (Online Analytical Processing) [Daily analysis of the organization]
+
+Centralized DB
+Distributed DB
+Cloud DB
+Hierarchical DB
+Relational DB **********IMP*****
+
+Relational Database 
+---------------------
+The data/information is organized in the form of tables.
+
+Table 
+----------
+Row -> Record -> Tuple (The entire info)
+Column -> Fields -> Domain -> Attribute
+
+RDBMS has ACID Properties thats why RDBMS is popular
+
+A -> Atomicity 
+C -> Consistency
+I -> Isolation
+D -> Durability
+
+Atomicity (Consider a transcation that it is either successful or not at all started)
+          (If user A send 500Rs to User B either it will be credit to the User B or don't debit from the user A)
+
+Consistency (Before and After transactions update the account balance simply called standards)
+
+Isolation (Only one suppose more than one user wants to withdraw money from the one account it is not possible)
+
+Durability (once all operations are completed you must commit the data)
+----------------------------------------------------------------------------------
+
+DBMS : It is a software which is used to create and manage the database.
+        It is a interface b/w user and database.
+
+RDBMS: The data which stored in the form of tables. The software which is uses the relations database.
+-------------------------------------------------------------
+Day 2
+-------------------------------------------------------------
+MySQL:
+
+Syntax:
+------------
+The Query/statement always begin with the command.
+
+Data types:
+----------------
+The type of information that we are storing.
+MySQL Datatypes:
+1) Numeric
+2) String
+3) Date
+Numeric: 
+--------------
+a) Integer (A number which has no decimal point)
+b) Float (Which is used to store real number with single precision)
+c) Double (Which is used to store real number with double precision)
+d) decimal(a,b)
+    Ex: decimal(5,2) 5 -> Precision & 2 -> Scale
+    243.42 
+e) bit(size) (It is used to store binary values consists of 8 bits)
+String: 
+-----------------
+a)char(n) (It store a fixed length string)
+b)varchar(n) (It's a variable length string) if we use varchar you can modify the size of datatype.
+c)text (There is no limit for size)
+d)blob (To store images)
+
+Date:
+---------------
+a)date (It gives the YY-MM-DD)
+b)time (HH-MM-SS)
+c)datetime (combination of above two)
+d)timestamp (Exact time with date)
+
+SQL is Not Case Sensitive, you can use INT or int , normally we use upper case for predefined keywords.
+
+Different Language of commands:
+-------------------------------------
+1)DDL(Data Definition Language)
+  -> create
+  -> drop
+  -> truncate
+  -> rename
+  -> alter
+2)DML(Data Manipulation Language)
+  -> insert 
+  -> update
+  -> delete
+3)DQL/DRL(Data Query/Retrieval Language) **IMP**
+  -> select
+4)TCL(Transaction Control Language)
+  -> commit
+  -> rollback
+  -> save point
+5)DCL(Data Control Language) ***IMP at Admin Level***
+  -> grant
+  -> revoke
+
+Creating Database
+-------------------
+>> create database krish;
+>> create database college;
+
+To list out the DB's
+----------------------
+>> show databases;
+
+In which DB we have to store the data, we must specify it as
+>> use krish/college;
+
+Creating a table in the college DB:
+-----------------------------------
+Sytax:
+>> create table table_name(col1 dt1,col2 dt2,....coln dtn);
+Ex:
+>> create table student(S_ID int,name varchar(30),branch varchar(10),age float,DOB date);
+
+To describe the table format:
+-------------------------------
+>> DESC student;
+It return the col name followed by the datatype.
+
+
+
