@@ -164,7 +164,201 @@ Ex:
 To describe the table format:
 -------------------------------
 >> DESC student;
-It return the col name followed by the datatype.
+It returns the col name followed by the datatype of an existing table.
+----------------------------------------------------------------------------------------------------------
+Day 3
+----------
+To show the databases 
+>> show databases;
+To create a database
+mysql> create database college;
+Use the newly created database to store the info from now onwards
+mysql> use college;
+
+Creating a student table as
+mysql> create table student (rollno int,
+    -> name varchar(20),
+    -> branch varchar(10),
+    -> age int,
+    -> mobileno int);
+
+to check the table description use the following command
+mysql> desc student;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| rollno   | int         | YES  |     | NULL    |       |
+| name     | varchar(20) | YES  |     | NULL    |       |
+| branch   | varchar(10) | YES  |     | NULL    |       |
+| age      | int         | YES  |     | NULL    |       |
+| mobileno | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+
+mysql> create table faculty(eid int, name varchar(20), desg varchar(10),
+salary float);
+
+To show the list of tables in the database
+mysql> show tables;
++-------------------+
+| Tables_in_college |
++-------------------+
+| faculty           |
+| student           |
++-------------------+
+To delete the table from the database use 
+mysql> drop table student;
+
+To make some fields as not null and primary key for the table use
+mysql> create table student(rollno int not null, name varchar(20) not null, branch varchar(10), marks float, primary key(rollno));
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int         | NO   | PRI | NULL    |       |
+| name   | varchar(20) | NO   |     | NULL    |       |
+| branch | varchar(10) | YES  |     | NULL    |       |
+| marks  | float       | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
 
 
+Inserting values into the table 
+Sytax:
+>> insert into table_name(col1,col2,....,coln)values(val1,val2,...,valn);
+
+Inserting a single row 
+mysql> insert into student (rollno,name,branch,marks) values (1,'krishna
+','MCA',90.10);
+
+Inserting a null value 
+Here we are not giving the marks 
+mysql> insert into student (rollno,name,branch) values (2,'crish','MBA');
+
+Instead of giving the field names we can directly insert the values but if we use it
+  we need to fill the all fields in the table.
+mysql> insert into student values (3,'ashok','CSE',80.34);
+
+Inserting multiple rows at a time as
+mysql> insert into student values (4,'pranav','EEE',75.89),(5,'keerthi',
+'MSC',60.89),(6,'sanjay','MECH',75.89);
+
+SELECT is used to retrieve the data from the table 
+Retrieving the rollno and name from the student table
+mysql> select rollno,name from student;
++--------+---------+
+| rollno | name    |
++--------+---------+
+|      1 | krishna |
+|      2 | crish   |
+|      3 | ashok   |
+|      4 | pranav  |
+|      5 | keerthi |
+|      6 | sanjay  |
++--------+---------+
+
+To display the entire table 
+mysql> select * from student;
++--------+---------+--------+-------+
+| rollno | name    | branch | marks |
++--------+---------+--------+-------+
+|      1 | krishna | MCA    |  90.1 |
+|      2 | crish   | MBA    |  NULL |
+|      3 | ashok   | CSE    | 80.34 |
+|      4 | pranav  | EEE    | 75.89 |
+|      5 | keerthi | MSC    | 60.89 |
+|      6 | sanjay  | MECH   | 75.89 |
++--------+---------+--------+-------+
+
+To remove the duplicate values or to display the unique marks
+mysql> select distinct marks from student;
++-------+
+| marks |
++-------+
+|  90.1 |
+|  NULL |
+| 80.34 |
+| 75.89 |
+| 60.89 |
++-------+
+
+Extract the student name and rollno from the student table who has got more than 80 marks
+mysql> select rollno,name from student where marks>80;
++--------+---------+
+| rollno | name    |
++--------+---------+
+|      1 | krishna |
+|      3 | ashok   |
++--------+---------+
+
+To display only first two rows in a table
+mysql> select * from student limit 2;
++--------+---------+--------+-------+
+| rollno | name    | branch | marks |
++--------+---------+--------+-------+
+|      1 | krishna | MCA    |  90.1 |
+|      2 | crish   | MBA    |  NULL |
++--------+---------+--------+-------+
+
+Extract the student details who has even rollno in the student table as
+mysql> select * from student where rollno IN (2,4,6,8,10);
++--------+--------+--------+-------+
+| rollno | name   | branch | marks |
++--------+--------+--------+-------+
+|      2 | crish  | MBA    |  NULL |
+|      4 | pranav | EEE    | 75.89 |
+|      6 | sanjay | MECH   | 75.89 |
++--------+--------+--------+-------+
+
+To add 10 marks for all the students in a table use
+mysql> select marks+10 from student;
++-------------------+
+| marks+10          |
++-------------------+
+| 100.0999984741211 |
+|              NULL |
+| 90.33999633789062 |
+| 85.88999938964844 |
+| 70.88999938964844 |
+| 85.88999938964844 |
++-------------------+
+
+To delete a table from the database
+mysql> show tables;
++-------------------+
+| Tables_in_college |
++-------------------+
+| faculty           |
+| student           |
++-------------------+
+
+mysql> drop table faculty;
+
+mysql> show tables;
++-------------------+
+| Tables_in_college |
++-------------------+
+| student           |
++-------------------+
+
+To rename a table in the database as
+mysql> alter table student rename to students;
+mysql> show tables;
++-------------------+
+| Tables_in_college |
++-------------------+
+| students          |
++-------------------+
+
+To delete a specified row in a table as
+mysql> delete from students where rollno=6;
+mysql> select * from students;
++--------+---------+--------+-------+
+| rollno | name    | branch | marks |
++--------+---------+--------+-------+
+|      1 | krishna | MCA    |  90.1 |
+|      2 | crish   | MBA    |  NULL |
+|      3 | ashok   | CSE    | 80.34 |
+|      4 | pranav  | EEE    | 75.89 |
+|      5 | keerthi | MSC    | 60.89 |
++--------+---------+--------+-------+
 
