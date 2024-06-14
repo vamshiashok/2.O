@@ -330,7 +330,7 @@ mysql> show tables;
 | faculty           |
 | student           |
 +-------------------+
-
+It will delete the entire table from the database.
 mysql> drop table faculty;
 
 mysql> show tables;
@@ -361,4 +361,166 @@ mysql> select * from students;
 |      4 | pranav  | EEE    | 75.89 |
 |      5 | keerthi | MSC    | 60.89 |
 +--------+---------+--------+-------+
+----------------------------------------------------------
+Day 4
+---------------------------
+AS - Alias Keyword for fields to display the result but the original table doesn't change.
+mysql> select marks+10 as newMarks from students;
++-------------------+
+| newMarks          |
++-------------------+
+| 100.0999984741211 |
+|              NULL |
+| 90.33999633789062 |
+| 85.88999938964844 |
+| 70.88999938964844 |
+| 80.80000305175781 |
++-------------------+
+-----------------------------------------------------
+UPDATE: we are updating the data in the table.
+mysql> select * from students;
++--------+---------+--------+-------+
+| rollno | name    | branch | marks |
++--------+---------+--------+-------+
+|      1 | krishna | MCA    |  90.1 |
+|      2 | crish   | MBA    |  NULL |
+|      3 | ashok   | CSE    | 80.34 |
+|      4 | pranav  | EEE    | 75.89 |
+|      5 | keerthi | MSC    | 60.89 |
+|      6 | Ganga   | ITI    |  70.8 |
++--------+---------+--------+-------+
+mysql> update students set branch='MECH' where rollno=6;
+mysql> select * from students;
++--------+---------+--------+-------+
+| rollno | name    | branch | marks |
++--------+---------+--------+-------+
+|      1 | krishna | MCA    |  90.1 |
+|      2 | crish   | MBA    |  NULL |
+|      3 | ashok   | CSE    | 80.34 |
+|      4 | pranav  | EEE    | 75.89 |
+|      5 | keerthi | MSC    | 60.89 |
+|      6 | Ganga   | MECH   |  70.8 |
++--------+---------+--------+-------+
 
+mysql> update students set branch='MCA',name='Crishna' wher
+e rollno=2;
+mysql> select * from students;
++--------+---------+--------+-------+
+| rollno | name    | branch | marks |
++--------+---------+--------+-------+
+|      1 | krishna | MCA    |  90.1 |
+|      2 | Crishna | MCA    |  NULL |
+|      3 | ashok   | CSE    | 80.34 |
+|      4 | pranav  | EEE    | 75.89 |
+|      5 | keerthi | MSC    | 60.89 |
+|      6 | Ganga   | MECH   |  70.8 |
++--------+---------+--------+-------+
+--------------------------------------------------------------------------------
+ALTER: Changing the table not the values inside the table.
+Adding a New Column to the existing table
+----------------------------------------
+mysql> alter table students add age int;
+To add multiple columns at a time, 
+>> alter table students add (dob date,mobno int);
+
+mysql> update students set age=23 where rollno=1;
+mysql> select * from students;
++--------+---------+--------+-------+------+
+| rollno | name    | branch | marks | age  |
++--------+---------+--------+-------+------+
+|      1 | krishna | MCA    |  90.1 |   23 |
+|      2 | Crishna | MCA    |  NULL | NULL |
+|      3 | ashok   | CSE    | 80.34 | NULL |
+|      4 | pranav  | EEE    | 75.89 | NULL |
+|      5 | keerthi | MSC    | 60.89 | NULL |
+|      6 | Ganga   | MECH   |  70.8 | NULL |
++--------+---------+--------+-------+------+
+
+Modifying the existing column 
+-----------------------------
+Syntax: >> alter table table_name modify colname datatype;
+mysql> alter table students modify age float;
+mysql> desc students;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int         | NO   | PRI | NULL    |       |
+| name   | varchar(20) | NO   |     | NULL    |       |
+| branch | varchar(10) | YES  |     | NULL    |       |
+| marks  | float       | YES  |     | NULL    |       |
+| age    | float       | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+
+Deleting a column from the table
+--------------------------------
+Syntax: >> alter table table_name drop column col_name;
+mysql> alter table students drop column age;
+mysql> select * from students;
++--------+---------+--------+-------+
+| rollno | name    | branch | marks |
++--------+---------+--------+-------+
+|      1 | krishna | MCA    |  90.1 |
+|      2 | Crishna | MCA    |  NULL |
+|      3 | ashok   | CSE    | 80.34 |
+|      4 | pranav  | EEE    | 75.89 |
+|      5 | keerthi | MSC    | 60.89 |
+|      6 | Ganga   | MECH   |  70.8 |
++--------+---------+--------+-------+
+or else we can use >> alter table students drop age;
+
+modify means we are changing the data type of the column 
+whereas rename means we are renaming the column name 
+
+mysql> alter table students rename column marks to Marks;
+mysql> select * from students;
++--------+---------+--------+-------+
+| rollno | name    | branch | Marks |
++--------+---------+--------+-------+
+|      1 | krishna | MCA    |  90.1 |
+|      2 | Crishna | MCA    |  NULL |
+|      3 | ashok   | CSE    | 80.34 |
+|      4 | pranav  | EEE    | 75.89 |
+|      5 | keerthi | MSC    | 60.89 |
+|      6 | Ganga   | MECH   |  70.8 |
++--------+---------+--------+-------+
+
+TRUNCATE will delete the table data but the entire table structure is still available in the database.
+Whereas DROP will delete the table data along with its structure.
+----------------------------------------------------------------------------------------------------------------
+ORDER BY: We are retrieving the values by an order
+mysql> select * from students order by Marks;
+The above command diplays the Marks in Ascending order
++--------+---------+--------+-------+
+| RollNo | Name    | Branch | Marks |
++--------+---------+--------+-------+
+|      2 | Crishna | MCA    |  NULL |
+|      5 | keerthi | MSC    | 60.89 |
+|      6 | Ganga   | MECH   |  70.8 |
+|      4 | pranav  | EEE    | 75.89 |
+|      3 | ashok   | CSE    | 80.34 |
+|      1 | krishna | MCA    |  90.1 |
++--------+---------+--------+-------+
+
+By default the order by command displays in Ascending order,
+if you want to display in Descending order use 
+mysql> select * from students order by Marks DESC;
++--------+---------+--------+-------+
+| RollNo | Name    | Branch | Marks |
++--------+---------+--------+-------+
+|      1 | krishna | MCA    |  90.1 |
+|      3 | ashok   | CSE    | 80.34 |
+|      4 | pranav  | EEE    | 75.89 |
+|      6 | Ganga   | MECH   |  70.8 |
+|      5 | keerthi | MSC    | 60.89 |
+|      2 | Crishna | MCA    |  NULL |
++--------+---------+--------+-------+
+Applying where condition,
+mysql> select * from students where RollNO>3 order by Marks
+;
++--------+---------+--------+-------+
+| RollNo | Name    | Branch | Marks |
++--------+---------+--------+-------+
+|      5 | keerthi | MSC    | 60.89 |
+|      6 | Ganga   | MECH   |  70.8 |
+|      4 | pranav  | EEE    | 75.89 |
++--------+---------+--------+-------+
