@@ -524,3 +524,107 @@ mysql> select * from students where RollNO>3 order by Marks
 |      6 | Ganga   | MECH   |  70.8 |
 |      4 | pranav  | EEE    | 75.89 |
 +--------+---------+--------+-------+
+----------------------------------------------------------
+Day 5
+----------
+truncate: Deletes table from the database but the structure is still there.
+mysql> show tables;
++-------------------+
+| Tables_in_college |
++-------------------+
+| students          |
++-------------------+
+mysql> desc students;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| RollNo | int         | NO   | PRI | NULL    |       |
+| Name   | varchar(20) | NO   |     | NULL    |       |
+| Branch | varchar(10) | YES  |     | NULL    |       |
+| Marks  | float       | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+
+mysql> drop table students;
+mysql> select * from students;
+ERROR 1146 (42S02): Table 'college.students' doesn't exist
+
+Creating EMP Table:
+mysql> create table EMP (EID int, EName varchar(20), salary
+float, city varchar(20));
+mysql> desc EMP;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| EID    | int         | YES  |     | NULL    |       |
+| EName  | varchar(20) | YES  |     | NULL    |       |
+| salary | float       | YES  |     | NULL    |       |
+| city   | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+mysql> insert into EMP values(1,'crish',30000,'Bnglr'),(2,'k
+rish',40000,'Delhi'),(3,'pranav',25000,'Chennai'),(4,'Tej',5
+0000,'Mumbai'),(5,'Ashok',25000,'Pune');
+mysql> select * from emp;
+mysql> select * from emp;
++------+--------+--------+---------+
+| EID  | EName  | salary | city    |
++------+--------+--------+---------+
+|    1 | crish  |  30000 | Bnglr   |
+|    2 | krish  |  40000 | Delhi   |
+|    3 | pranav |  25000 | Chennai |
+|    4 | Tej    |  50000 | Mumbai  |
+|    5 | Ashok  |  25000 | Pune    |
++------+--------+--------+---------+
+
+If both employees got the same salary but we have to display the Employee names
+  in alphabetic order we use the commands like,
+mysql> select * from emp order by salary,EName;
++------+--------+--------+---------+
+| EID  | EName  | salary | city    |
++------+--------+--------+---------+
+|    5 | Ashok  |  25000 | Pune    |
+|    3 | pranav |  25000 | Chennai |
+|    1 | crish  |  30000 | Bnglr   |
+|    2 | krish  |  40000 | Delhi   |
+|    4 | Tej    |  50000 | Mumbai  |
++------+--------+--------+---------+
+
+mysql> select * from emp where salary > all (select salary f
+rom emp where city='Pune');
++------+-------+--------+--------+
+| EID  | EName | salary | city   |
++------+-------+--------+--------+
+|    1 | crish |  30000 | Bnglr  |
+|    2 | krish |  40000 | Delhi  |
+|    4 | Tej   |  50000 | Mumbai |
++------+-------+--------+--------+
+The above command will displays the employees who's salary has greater than the employees in the Pune city.
+
+If we use ANY it can display the greater than any one of the salary, that is the reason to display the 26000.
+mysql> select * from emp where salary > any (select salary f
+rom emp where city='Pune');
++------+--------+--------+--------+
+| EID  | EName  | salary | city   |
++------+--------+--------+--------+
+|    1 | crish  |  30000 | Bnglr  |
+|    2 | krish  |  40000 | Delhi  |
+|    4 | Tej    |  50000 | Mumbai |
+|    6 | kusuma |  26000 | Pune   |
++------+--------+--------+--------+
+
+It displays the results only both conditions are matched.
+mysql> select * from emp where salary=40000 and city='Delhi';
++------+-------+--------+-------+
+| EID  | EName | salary | city  |
++------+-------+--------+-------+
+|    2 | krish |  40000 | Delhi |
++------+-------+--------+-------+
+
+It displays the results either of the condition matches.
+mysql> select * from emp where salary=40000 or city='Pune';
++------+--------+--------+-------+
+| EID  | EName  | salary | city  |
++------+--------+--------+-------+
+|    2 | krish  |  40000 | Delhi |
+|    5 | Ashok  |  25000 | Pune  |
+|    6 | kusuma |  26000 | Pune  |
++------+--------+--------+-------+
