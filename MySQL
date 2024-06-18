@@ -628,3 +628,283 @@ mysql> select * from emp where salary=40000 or city='Pune';
 |    5 | Ashok  |  25000 | Pune  |
 |    6 | kusuma |  26000 | Pune  |
 +------+--------+--------+-------+
+
+Extract the employee details whose name starts with C ,
+mysql> select * from emp where EName like 'c%';
++------+---------+--------+-------+
+| EID  | EName   | salary | city  |
++------+---------+--------+-------+
+|    1 | crish   |  30000 | Bnglr |
+|    7 | crishna |  46000 | Bnglr |
++------+---------+--------+-------+
+Extract the employee details whose name ends with A,
+mysql> select * from emp where EName like '%a';
++------+---------+--------+-------+
+| EID  | EName   | salary | city  |
++------+---------+--------+-------+
+|    6 | kusuma  |  26000 | Pune  |
+|    7 | crishna |  46000 | Bnglr |
++------+---------+--------+-------+
+Extract the employee detail whose name starts with C and ends with A,
+mysql> select * from emp where EName like 'c%a';
++------+---------+--------+-------+
+| EID  | EName   | salary | city  |
++------+---------+--------+-------+
+|    7 | crishna |  46000 | Bnglr |
++------+---------+--------+-------+
+
+UNION and INTERSECTION
+-----------------------
+Syntax: select * from emp1 UNION/INTERSECTION select * from emp2;
+
+Applying the arithmetic operators (unary operator)
+mysql> select -salary from emp;
++---------+
+| -salary |
++---------+
+|  -30000 |
+|  -40000 |
+|  -25000 |
+|  -50000 |
+|  -25000 |
+|  -26000 |
+|  -46000 |
++---------+
+
+To perform COUNT operation , we need to use GROUP BY.
+To find out how many employees are there in each city.
+mysql> select count(EID), city from emp group by city;
++------------+---------+
+| count(EID) | city    |
++------------+---------+
+|          2 | Bnglr   |
+|          1 | Delhi   |
+|          1 | Chennai |
+|          1 | Mumbai  |
+|          2 | Pune    |
++------------+---------+
+
+WHERE is applied to each and every record on the table,
+whereas HAVING is applied on GROUP BY.
+
+Extract the employee details more than 1 employee in a city
+mysql> select count(EID), city from emp group by city having count(
+EID)>1;
++------------+-------+
+| count(EID) | city  |
++------------+-------+
+|          2 | Bnglr |
+|          2 | Pune  |
++------------+-------+
+Extract the emp details who are staying in Pune more than 1 emp records if available.
+mysql> select count(EID), city from emp where city='Pune' group by
+city having count(EID)>1;
++------------+------+
+| count(EID) | city |
++------------+------+
+|          2 | Pune |
++------------+------+
+Maximum salary getting in a city,
+mysql> select max(salary),city from emp group by city;
++-------------+---------+
+| max(salary) | city    |
++-------------+---------+
+|       46000 | Bnglr   |
+|       40000 | Delhi   |
+|       25000 | Chennai |
+|       50000 | Mumbai  |
+|       26000 | Pune    |
++-------------+---------+
+Minimum salary getting in a city,
+mysql> select min(salary),city from emp group by city;
++-------------+---------+
+| min(salary) | city    |
++-------------+---------+
+|       30000 | Bnglr   |
+|       40000 | Delhi   |
+|       25000 | Chennai |
+|       50000 | Mumbai  |
+|       25000 | Pune    |
++-------------+---------+
+Sum of salaries based on the cities,
+mysql> select sum(salary),city from emp group by city;
++-------------+---------+
+| sum(salary) | city    |
++-------------+---------+
+|       76000 | Bnglr   |
+|       40000 | Delhi   |
+|       25000 | Chennai |
+|       50000 | Mumbai  |
+|       51000 | Pune    |
++-------------+---------+
+---------------------------------------------------------------------
+Day 6
+-----------
+JOINS
+------
+Combining more than one table.
+Suppose we have many tables are there in database, we wish to extract the 
+data from more than one table we use joins.
+
+1) Inner Join 
+2) Outer Join [a)Left Outer Join b) Right Outer Join c) Full join] 
+3) Cross Join
+
+If we have to use joins there must and stood have the same fields in all the tables we are going to be join.
+1)Inner Join: Only the matched one will shows in the result table.
+2)Outer Join: All the content from table1 and table2 will be fetched.
+a) Left Outer Join: we get all the records from the left table and only the records from the right table which having a key will be displayed.
+b) Right Outer Join: The complete right table will be displayed corresponding to the left table only matched fields will get fetched.
+c) Full Join: All the records from both the tables gets fetched.
+3) Cross Join: cartesian product, one record from table 1 will get all the records from table 2.
+
+Creating department table,
+mysql> create table department(did int, dname varchar(20),eid int);
+mysql> insert into department values(101,'ECE',2),(102,'CSE',3),(10
+3,'EEE',1),(104,'MECH',4),(105,'MBA',6),(106,'CSE',8),(108,'ECE',9)
+;
+mysql> select * from department;
++------+-------+------+
+| did  | dname | eid  |
++------+-------+------+
+|  101 | ECE   |    2 |
+|  102 | CSE   |    3 |
+|  103 | EEE   |    1 |
+|  104 | MECH  |    4 |
+|  105 | MBA   |    6 |
+|  106 | CSE   |    8 |
+|  108 | ECE   |    9 |
++------+-------+------+
+mysql> select * from emp;
++------+---------+--------+---------+
+| eid  | ename   | salary | city    |
++------+---------+--------+---------+
+|    1 | crish   |  30000 | Bnglr   |
+|    2 | krish   |  40000 | Delhi   |
+|    3 | pranav  |  25000 | Chennai |
+|    4 | Tej     |  50000 | Mumbai  |
+|    5 | Ashok   |  25000 | Pune    |
+|    6 | kusuma  |  26000 | Pune    |
+|    7 | crishna |  46000 | Bnglr   |
++------+---------+--------+---------+
+Inner Join:
+--------------
+mysql> select e.eid,ename,salary,city,did,dname from emp e,departme
+nt d where e.eid=d.eid;
++------+--------+--------+---------+------+-------+
+| eid  | ename  | salary | city    | did  | dname |
++------+--------+--------+---------+------+-------+
+|    2 | krish  |  40000 | Delhi   |  101 | ECE   |
+|    3 | pranav |  25000 | Chennai |  102 | CSE   |
+|    1 | crish  |  30000 | Bnglr   |  103 | EEE   |
+|    4 | Tej    |  50000 | Mumbai  |  104 | MECH  |
+|    6 | kusuma |  26000 | Pune    |  105 | MBA   |
++------+--------+--------+---------+------+-------+
+
+Outer Join:
+a) Left Outer Join:
+mysql> select e.eid,e.ename,e.salary,e.city,d.did,d.dname from emp
+e left outer join department d ON e.eid=d.eid;
+The complete left side table is fetched if the right side has matched results then it will be fetched
+else it is NULL.
++------+---------+--------+---------+------+-------+
+| eid  | ename   | salary | city    | did  | dname |
++------+---------+--------+---------+------+-------+
+|    1 | crish   |  30000 | Bnglr   |  103 | EEE   |
+|    2 | krish   |  40000 | Delhi   |  101 | ECE   |
+|    3 | pranav  |  25000 | Chennai |  102 | CSE   |
+|    4 | Tej     |  50000 | Mumbai  |  104 | MECH  |
+|    5 | Ashok   |  25000 | Pune    | NULL | NULL  |
+|    6 | kusuma  |  26000 | Pune    |  105 | MBA   |
+|    7 | crishna |  46000 | Bnglr   | NULL | NULL  |
++------+---------+--------+---------+------+-------+
+b)Right Outer Join: 
+All the right side table values get fetched and only matched records from left are showned and other records will be NULL.
+mysql> select e.eid,e.ename,e.salary,e.city,d.did,d.dname from emp e right outer join department d ON e.eid=d.eid;
++------+--------+--------+---------+------+-------+
+| eid  | ename  | salary | city    | did  | dname |
++------+--------+--------+---------+------+-------+
+|    2 | krish  |  40000 | Delhi   |  101 | ECE   |
+|    3 | pranav |  25000 | Chennai |  102 | CSE   |
+|    1 | crish  |  30000 | Bnglr   |  103 | EEE   |
+|    4 | Tej    |  50000 | Mumbai  |  104 | MECH  |
+|    6 | kusuma |  26000 | Pune    |  105 | MBA   |
+| NULL | NULL   |   NULL | NULL    |  106 | CSE   |
+| NULL | NULL   |   NULL | NULL    |  108 | ECE   |
++------+--------+--------+---------+------+-------+
+
+Full Join is directly not possible in MySQL so use the following one
+mysql> select e.eid,e.ename,e.salary,e.city,d.did,d.dname from emp e left outer join department d ON e.eid=d.eid 
+       union 
+       select e.eid,e.ename,e.salary,e.city,d.did,d.dname from emp e right outer join department d ON e.eid=d.eid;
++------+---------+--------+---------+------+-------+
+| eid  | ename   | salary | city    | did  | dname |
++------+---------+--------+---------+------+-------+
+|    1 | crish   |  30000 | Bnglr   |  103 | EEE   |
+|    2 | krish   |  40000 | Delhi   |  101 | ECE   |
+|    3 | pranav  |  25000 | Chennai |  102 | CSE   |
+|    4 | Tej     |  50000 | Mumbai  |  104 | MECH  |
+|    5 | Ashok   |  25000 | Pune    | NULL | NULL  |
+|    6 | kusuma  |  26000 | Pune    |  105 | MBA   |
+|    7 | crishna |  46000 | Bnglr   | NULL | NULL  |
+| NULL | NULL    |   NULL | NULL    |  106 | CSE   |
+| NULL | NULL    |   NULL | NULL    |  108 | ECE   |
++------+---------+--------+---------+------+-------+
+
+3) Cross Join: Feteches first record from the table 1 and all records from the table 2 like wise.
+mysql> select * from emp cross join department;
++------+---------+--------+---------+------+-------+------+
+| eid  | ename   | salary | city    | did  | dname | eid  |
++------+---------+--------+---------+------+-------+------+
+|    7 | crishna |  46000 | Bnglr   |  101 | ECE   |    2 |
+|    6 | kusuma  |  26000 | Pune    |  101 | ECE   |    2 |
+|    5 | Ashok   |  25000 | Pune    |  101 | ECE   |    2 |
+|    4 | Tej     |  50000 | Mumbai  |  101 | ECE   |    2 |
+|    3 | pranav  |  25000 | Chennai |  101 | ECE   |    2 |
+|    2 | krish   |  40000 | Delhi   |  101 | ECE   |    2 |
+|    1 | crish   |  30000 | Bnglr   |  101 | ECE   |    2 |
+|    7 | crishna |  46000 | Bnglr   |  102 | CSE   |    3 |
+|    6 | kusuma  |  26000 | Pune    |  102 | CSE   |    3 |
+|    5 | Ashok   |  25000 | Pune    |  102 | CSE   |    3 |
+|    4 | Tej     |  50000 | Mumbai  |  102 | CSE   |    3 |
+|    3 | pranav  |  25000 | Chennai |  102 | CSE   |    3 |
+|    2 | krish   |  40000 | Delhi   |  102 | CSE   |    3 |
+|    1 | crish   |  30000 | Bnglr   |  102 | CSE   |    3 |
+|    7 | crishna |  46000 | Bnglr   |  103 | EEE   |    1 |
+|    6 | kusuma  |  26000 | Pune    |  103 | EEE   |    1 |
+|    5 | Ashok   |  25000 | Pune    |  103 | EEE   |    1 |
+|    4 | Tej     |  50000 | Mumbai  |  103 | EEE   |    1 |
+|    3 | pranav  |  25000 | Chennai |  103 | EEE   |    1 |
+|    2 | krish   |  40000 | Delhi   |  103 | EEE   |    1 |
+|    1 | crish   |  30000 | Bnglr   |  103 | EEE   |    1 |
+|    7 | crishna |  46000 | Bnglr   |  104 | MECH  |    4 |
+|    6 | kusuma  |  26000 | Pune    |  104 | MECH  |    4 |
+|    5 | Ashok   |  25000 | Pune    |  104 | MECH  |    4 |
+|    4 | Tej     |  50000 | Mumbai  |  104 | MECH  |    4 |
+|    3 | pranav  |  25000 | Chennai |  104 | MECH  |    4 |
+|    2 | krish   |  40000 | Delhi   |  104 | MECH  |    4 |
+|    1 | crish   |  30000 | Bnglr   |  104 | MECH  |    4 |
+|    7 | crishna |  46000 | Bnglr   |  105 | MBA   |    6 |
+|    6 | kusuma  |  26000 | Pune    |  105 | MBA   |    6 |
+|    5 | Ashok   |  25000 | Pune    |  105 | MBA   |    6 |
+|    4 | Tej     |  50000 | Mumbai  |  105 | MBA   |    6 |
+|    3 | pranav  |  25000 | Chennai |  105 | MBA   |    6 |
+|    2 | krish   |  40000 | Delhi   |  105 | MBA   |    6 |
+|    1 | crish   |  30000 | Bnglr   |  105 | MBA   |    6 |
+|    7 | crishna |  46000 | Bnglr   |  106 | CSE   |    8 |
+|    6 | kusuma  |  26000 | Pune    |  106 | CSE   |    8 |
+|    5 | Ashok   |  25000 | Pune    |  106 | CSE   |    8 |
+|    4 | Tej     |  50000 | Mumbai  |  106 | CSE   |    8 |
+|    3 | pranav  |  25000 | Chennai |  106 | CSE   |    8 |
+|    2 | krish   |  40000 | Delhi   |  106 | CSE   |    8 |
+|    1 | crish   |  30000 | Bnglr   |  106 | CSE   |    8 |
+|    7 | crishna |  46000 | Bnglr   |  108 | ECE   |    9 |
+|    6 | kusuma  |  26000 | Pune    |  108 | ECE   |    9 |
+|    5 | Ashok   |  25000 | Pune    |  108 | ECE   |    9 |
+|    4 | Tej     |  50000 | Mumbai  |  108 | ECE   |    9 |
+|    3 | pranav  |  25000 | Chennai |  108 | ECE   |    9 |
+|    2 | krish   |  40000 | Delhi   |  108 | ECE   |    9 |
+|    1 | crish   |  30000 | Bnglr   |  108 | ECE   |    9 |
++------+---------+--------+---------+------+-------+------+
+
+
