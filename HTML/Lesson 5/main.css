@@ -1,0 +1,16 @@
+html{
+    font-size: 17px;
+}
+body{
+    background-color: black;
+    color: azure;
+}
+a{
+    color: rgb(86, 226, 43);
+}
+a:visited{
+    color: yellow;
+}
+a:hover, a:active {
+    color: rgb(69, 85, 173);
+}

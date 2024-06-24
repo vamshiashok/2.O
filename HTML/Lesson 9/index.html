@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Form</title>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="html5.png" />
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <h1>Form Tag</h1>
+    <hr />
+    <nav>
+        <ul>
+            <li>
+                <a href="#contactme">Contact Me</a>
+            </li>
+        </ul>
+    </nav>
+    <br /><br />
+    <hr />
+    <h2>Contact Me</h2>
+    <p>Fill the Form to Contact Me</p>
+    <form action="https://httpbin.org/get" method="get">
+        <fieldset>
+            <legend>Personal Info</legend>
+            <p>
+                <label for="firstName">First Name: </label>
+                <input type="text" name="firstName" id="firstName" required placeholder="Enter First Name" autofocus
+                    autocomplete="on" />
+            </p>
+            <p>
+                <label for="lastName">Last Name: </label>
+                <input type="text" name="lastName" id="lastName" required placeholder="Enter Last Name"
+                    autocomplete="on" />
+            </p>
+            <p>
+                <label for="password">Password: </label>
+                <input type="password" name="password" id="password" required placeholder="password" />
+            </p>
+            <p>
+                <label for="phoneNo">Phone No: </label>
+                <input type="tel" name="phoneNo" id="phoneNo" required placeholder="0987654321" pattern="[0-9]{10}"
+                    autocomplete="off" />
+            </p>
+            <p>
+                <label for="decade">Your favorite decade: </label>
+                <input type="number" name="decade" id="decade" min="1950" max="2024" step="10" value="1980" />
+            </p>
+            <p>
+                <label for="coffee">Favorite coffee: </label>
+                <select name="coffee" id="coffee" multiple size="3">
+                    <optgroup label="Normal Coffees">
+                        <option value="filter coffee">Filter Coffee</option>
+                        <option value="black coffee">Black Coffee</option>
+                    </optgroup>
+                    <optgroup label="Ice Coffees">
+                        <option value="cold coffee">Cold Coffee</option>
+                    </optgroup>
+                    <optgroup label="Rich Coffee">
+                        <option value="cappuccino" selected>Cappuccino</option>
+                    </optgroup>
+                    <optgroup label="Other Coffees">
+                        <option value="other">Other</option>
+                    </optgroup>
+                </select>
+            </p>
+            <!-- Another Method-->
+            <p>
+                <label for="coffee">Favorite Coffee:</label>
+                <input type="text" name="coffee" id="coffee" list="coffee-list">
+                <datalist id="coffee-list">
+                    <option value="coffee">
+                    <option value="latte">
+                    <option value="espresso">
+                    <option value="cortado">
+                    <option value="americano">
+                    <option value="other">
+                </datalist>
+            </p>
+        </fieldset><br><br>
+        <fieldset>
+            <legend>What is your fvrt food?</legend>
+            <p>
+                <input type="radio" name="food" id="biriyani">
+                <label for="biriyani">Biriyani</label>
+            </p>
+            <p>
+                <input type="radio" name="food" id="mandi">
+                <label for="mandi">Mandi</label>
+            </p>
+            <p>
+                <input type="radio" name="food" id="fries">
+                <label for="fries">Fries</label>
+            </p>
+            <p>
+                <input type="radio" name="food" id="other1">
+                <label for="other1">Others</label>
+            </p>
+        </fieldset><br><br>
+        <fieldset>
+            <legend>which pet's do you have?</legend>
+            <p>
+                <input type="checkbox" name="pet" id="dog">
+                <label for="dog">Dog</label>
+            </p>
+            <p>
+                <input type="checkbox" name="pet" id="cat">
+                <label for="cat">Cat</label>
+            </p>
+            <p>
+                <input type="checkbox" name="pet" id="pig">
+                <label for="pig">Pig</label>
+            </p>
+            <p>
+                <input type="checkbox" name="pet" id="otherpet">
+                <label for="ohterpet">Other</label>
+            </p>
+        </fieldset>
+        <br><br>
+        <fieldset>
+            <legend>Feedback is more Imp for us!</legend>
+            <p>
+                <label for="message">Your Message: </label><br><br>
+                <textarea name="feedbackMsg" id="message" cols="50" rows="10"
+                    placeholder="Write your feedback here"></textarea>
+            </p>
+        </fieldset><br><br>
+        <button type="submit">Submit</button>
+        <button type="submit" formaction="https://httpbin.org/post" formmethod="post">Post</button>
+        <button type="reset">Reset</button>
+    </form>
+    <br><br><br>
+    <p>Write your Querie to : <a href="mailto:abc@gmail.com">Email me</a></p><br><br>
+    </aside><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <div class="movetop">
+        <a href="#"> Move to top</a>
+    </div>
+</body>
+
+</html>
+
+<!-- autocomplete is used to show the recent entries in the textbox
+    auto focus is used when the page is reload the cursor will automatically enters into the input box-->

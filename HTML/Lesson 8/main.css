@@ -1,0 +1,27 @@
+html{
+    font-size: 18px;
+}
+body {
+    background-color: #333;
+    color: whitesmoke;
+}
+table, tr, th, td, caption{
+    border: 1px solid #5aeb06;
+    font-family: 'Courier New', Courier, monospace;
+    border-collapse: collapse;
+    padding: 10px;
+    background-color: rgb(37, 85, 87);
+    color: rgb(239, 243, 11);
+    user-select: none;    
+}
+.movetop{
+    text-align: center;
+}
+a{
+    color: yellow;
+    border: 2px solid green;
+    padding: 5px;
+}
+a:hover {
+    background-color: #cc4242;
+}
