@@ -1,0 +1,113 @@
+HTML
+----------
+HTML is a Hyper Text Markup Language, used to create the structure
+	and presentation of the content in the webpage.
+It consists of series of elements.
+----------------------------------------
+
+Tag in HTML:
+------------ 
+As a part of the HTML element. Tags helps the browser to convert the 
+	HTML documents into webpags.
+Tags are used to hold the HTML elements.
+Tags are surrounded by the angle brackets <>.
+There are two types of tags:
+1) Container Tags
+-----------------
+It has both the opening tag and closing tag.
+Ex: <p> <table> <div> <body> <head> <nav>
+2) Empty Tags
+--------------
+It doesn't have the closing tag at all.
+Ex: <br> <hr> <img> <link> <input> <meta>
+
+some common tags are
+1) Content tags: <p> <h1> <ol> <ul> <li>
+2) Multimedia tags: <img> <video> <audio>
+3) Link tags: <a>
+4) Form tags: <form> <input> <textarea> <select> <label>
+5) Structural tags: <div> <span> <header> <nav> <main> <footer>
+
+Element in HTML:
+-----------------
+An Element is defined by a starting tag, some content and an ending tag.
+Ex: <p> content here </p>
+The HTML element is everything from the starting tag to the ending tag.
+HTML elements tells the browser how to display the content.
+
+HTML Block Level Elements:
+A block-level element always starts on a new line, 
+	and the browsers automatically add some space before and 
+	after the element.
+Ex: <p> <div> <article> <aside> <fieldset> <form> <h1>..<h6> <nav> <ol> <ul> <video>
+
+HTML Inline Elements:
+An inline element does not start on a new line.
+An inline element only takes up as much width as necessary.
+Ex: <a> <span> <b> <i> <img> <input> <br> <button>
+
+<span> : It is inline container used to mark up a part of a text, or a part of a document.
+<div> : It is a block level element which is used to grouping the content.
+
+Attributes in HTML:
+--------------------
+Attributes provides additional information about the HTML elements.
+Attributes are always specified in the starting tag.
+Attributes are usually comes in the name value pairs like "color: red;"
+
+Structure of HTML:
+--------------------
+<!DOCTYPE html>
+<html> //root element
+<head> //Includes introductory content like headings, style, script, link, logos...
+	<title>Page Title</title>
+</head>
+<body> // All the content which we need to display in the webpage is written in body tag only.
+	<header>
+	</header>
+	<main>
+		<h1>My First Heading</h1>
+		<p>My first paragraph.</p>
+	</main>
+	<footer>
+	</footer>
+</body>
+</html>
+
+HTML Formatting Tags:
+<b> <i> <strong> <em> <small> <del> <ins> <sub> <sup>
+
+Hyperlink in HTML:
+--------------------
+The anchor tag (<a>) defines a hyperlink in HTML.
+Syntax: <a href="https://www.google.com/" target="_blank">Google</a>
+Target Attributes: _slef , _blank , _parent , _top
+The target attribute is used to where the hyperlink need to be opened.
+
+Links: Unvisited, Visited, Active link
+URL: Absolute URL, Relative URL , Local Link
+
+HTML image tag: 
+---------------
+Image tag is used to embed an image in a webpage.
+Syntax: <img src="krishna.jpg" alt="krishna image...." title="Krishna" style="width:100px; height:100px">
+
+alt is used to display some text whenever the browser failed to fetch the image.
+title is used to show some text when we hover on it.
+
+HTML Entities: 
+--------------
+Entities are special characters represented by codes or numbers.
+Such as &lt; for <
+		&gt; for >
+
+<!DOCTYPE> :
+------------ 
+DOCTYPE is used to specify the document type and version of HTML used.
+Ex: <!DOCTYPE html>
+
+<meta> : 
+--------
+meta tag is used to define the meta data about the document 
+	which contains attributes like charset viewport and description
+Syntax: <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
