@@ -1,0 +1,18 @@
+Linux
+------------
+Definition: 
+1)It is a open-source operating system, it is the software that directly manages the system's hardware and resources like 
+  CPU, Memory and Storage. It manages the communication between the software and the hardware.
+2) Linux is a open-source operating system known for its stability, security and flexibility.
+
+Q) What is Kernel?
+A Kernel is considered as the main component of the Linux OS. It is simply a resouce manager that 
+  acts as a bridge between hardware and software. Its main role is to manage hardware resources for 
+  users and is generally used to provide an interface for user-level interaction.
+
+Q) What is Bash?
+BASH(Bourne Again Shell)
+Bash is a versatile and powerful shell and scripting language that provides a way to interact
+  with Unix-based operating systems.
+It allows users to execute commands, perform complex operations and automate tasks.
+It can also read and execute the commands from a file, which is called a shell script.
