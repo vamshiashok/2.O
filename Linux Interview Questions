@@ -104,6 +104,20 @@ All the logs related in the server are stored in var folder. Logs are very usefu
 To login into the root user use : #sudo su -
 if we perform the touch command on the exisiting file it will changes the file creation time.
 
+Linux Distribution:
+-------------------
+A Linux distribution is an OS made through a software collection that contains the Linux kernel and a package management system often.
+
+Distribution	            Why To Use
+-------------          ------------------------
+UBuntu	              It works like Mac OS and easy to use.
+Linux mint	          It works like windows and should be use by new comers.
+Debian	              It provides stability but not recommended to a new user.
+Fedora	              If you want to use red hat and latest software.
+Red hat enterprise	  To be used commercially.
+CentOS	              If you want to use red hat but without its trademark.
+OpenSUSE	            It works same as Fedora but slightly older and more stable.
+Arch Linux	          It is not for the beginners because every package has to be installed by yourself
 
 
 https://www.interviewbit.com/linux-interview-questions/?sign_up_medium=ib_article_auth_blocker/
