@@ -63,3 +63,34 @@ Write (w): It allows the user to open and modify the file. One can also add new 
 Execute (x): It allows the user to execute or run the file.  One can also lookup a specific file within a directory.
 
 Reference Img: https://s3.ap-south-1.amazonaws.com/myinterviewtrainer-domestic/public_assets/assets/000/000/304/original/Linux_System_Architecture.png?1618826318
+
+Q) What is the difference between the Cron and Anacron?
+Cron: It is a program in Linux that is used to execute tasks at a scheduled time. It works effectively on machines that run continuously. 
+Anacron: It is a program in Linux that is used to execute tasks at certain intervals. It works effectively on machines that are powered off in a day or week. 
+
+            Cron	                                                                      Anacron 
+    It is a daemon.	                                                          It is not a daemon. 
+    It can be scheduled by any normal user. 	                                It can only be used by super users.
+    It is considered ideal for servers. 	                                    It is considered ideal for desktops and laptops.
+    It expects the system to run 24*7	                                        It does not expect the system to run 24*7
+    Its minimum granularity is in minutes. 	                                  Its minimum granularity is only in days
+    It is used to execute scheduled commands.	                                It is used to execute commands periodically.
+
+Q)  What do you mean by Shell Script?
+ It simply allows the execution of different commands that are entered in the shell.  It generally helps you to 
+  create complex programs containing conditional statements, loops, and functions.
+It is very easy to debug, can simplify everyday automation processes, and is much quicker as compared to writing big programs.
+
+Q) What is INODE and Process Id?
+INODE: It is a unique name given to each file by OS. Each inode has a unique inode number within a file system. It stores various information about files in Linux such as ownership, file size, file type, access mode, number of links, etc.  
+
+Process Id (Identifier): It is a unique Id given to each process. It is simply used to uniquely identify an active process throughout the system until the process terminates
+
+Q) Name the first process that is started by the kernel in Linux and what is its process id?
+The first process started by the kernel in Linux is “init” and its process id is 1
+
+Q) What is CLI and GUI?
+CLI (Command Line Interface): It is a command line program that usually accepts text as input to execute or run functions of the OS.
+GUI (Graphical User Interface): It is a Human commputer interface that allows users to interact with the electronic devices through graphical icons and visual indicators.
+
+https://www.interviewbit.com/linux-interview-questions/?sign_up_medium=ib_article_auth_blocker/
