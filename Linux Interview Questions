@@ -93,4 +93,17 @@ Q) What is CLI and GUI?
 CLI (Command Line Interface): It is a command line program that usually accepts text as input to execute or run functions of the OS.
 GUI (Graphical User Interface): It is a Human commputer interface that allows users to interact with the electronic devices through graphical icons and visual indicators.
 
+All the user commands are in bin folder.
+All the attached hard disk files that are present in dev folder.
+All the configuration files are stored in etc folder.
+All the users related data is stored in home folder.
+If you want to install any third party softwares like chrome or ... those are kept in opt folder.
+The proc folder contains all the virtual data i.e process running on the server and related info. The size of this folder is 0.
+All the logs related in the server are stored in var folder. Logs are very useful in realtime to resolve the issues.
+    The log files will return the exact reason that where the problem occured.
+To login into the root user use : #sudo su -
+if we perform the touch command on the exisiting file it will changes the file creation time.
+
+
+
 https://www.interviewbit.com/linux-interview-questions/?sign_up_medium=ib_article_auth_blocker/
