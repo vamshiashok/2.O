@@ -154,6 +154,9 @@ To list out the DB's
 In which DB we have to store the data, we must specify it as
 >> use krish/college;
 
+To verify which database we are using currently, 
+>> select database();
+
 Creating a table in the college DB:
 -----------------------------------
 Sytax:
