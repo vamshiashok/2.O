@@ -454,6 +454,10 @@ mysql> desc students;
 | age    | float       | YES  |     | NULL    |       |
 +--------+-------------+------+-----+---------+-------+
 
+Modifying the datatype of the existing column
+>> alter table table_name alter column column_name datatype;
+>> alter table students alter age int;
+
 Deleting a column from the table
 --------------------------------
 Syntax: >> alter table table_name drop column col_name;
