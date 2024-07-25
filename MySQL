@@ -914,4 +914,114 @@ mysql> select * from emp cross join department;
 |    1 | crish   |  30000 | Bnglr   |  108 | ECE   |    9 |
 +------+---------+--------+---------+------+-------+------+
 
+----------------------------------------------
+Day 7
+----------------------------------------------
+Sub Query:
+-----------
+We can simply say 'one query is written inside the another query'.
+or 
+The query which is written inside the another query is called sub query.
+Rule: The Sub Queries are written inside paranthesis ().
+      Order By is not possible in sub queries.
+      Here first sub query is executed after that the outer query will execute.
+      Generally the subqueries are written as SELECT and the OPERATOR.
 
+
+Outer Query: The Query which is placed outside is called outer query.
+Ex: 
+mysql> select * from employee;
++------+--------+--------+---------+
+| eid  | ename  | salary | city    |
++------+--------+--------+---------+
+|    1 | crish  |   3000 | Bnglr   |
+|    2 | krish  |  40000 | Delhi   |
+|    3 | pranav |  25000 | Chennai |
+|    4 | Tej    |  50000 | Mumbai  |
+|    5 | Ashok  |  25000 | Pune    |
+|    6 | Kusuma |  26000 | Pune    |
+|    7 | Sanjay |  46000 | Bnglr   |
++------+--------+--------+---------+
+
+mysql> select * from department;
++------+-------+------+
+| did  | dname | eid  |
++------+-------+------+
+|  101 | ECE   |    2 |
+|  102 | CSE   |    3 |
+|  103 | EEE   |    1 |
+|  104 | MECH  |    4 |
+|  105 | MBA   |    6 |
+|  106 | CSE   |    8 |
+|  108 | ECE   |    9 |
++------+-------+------+
+
+Sub Query Example for above two tables:
+IN Operator:
+mysql> select ename,salary,city from employee where eid in (select eid from employee where salary>25000);
++--------+--------+--------+
+| ename  | salary | city   |
++--------+--------+--------+
+| krish  |  40000 | Delhi  |
+| Tej    |  50000 | Mumbai |
+| Kusuma |  26000 | Pune   |
+| Sanjay |  46000 | Bnglr  |
++--------+--------+--------+
+Here, first the subquery is executed as it fetches eid 2,4,6,7 and for the eid's it will fetch the 
+  ename, salary, city from the employee table.
+Syntax: select col1,col2,..coln from tablename where col operator (select cols from table wherecond);
+Ex: mysql> select ename,salary,city from employee where salary=(select max(s
+alary) from employee);
++-------+--------+--------+
+| ename | salary | city   |
++-------+--------+--------+
+| Tej   |  50000 | Mumbai |
++-------+--------+--------+
+Note: If you are using = operator in subquery, make sure the subquery has to be return only single value or else we can get error.
+
+NOT IN Operator:
+Ex: mysql> select ename,salary from employee where eid NOT IN (select eid fr
+om employee where salary>25000);
++--------+--------+
+| ename  | salary |
++--------+--------+
+| crish  |   3000 |
+| pranav |  25000 |
+| Ashok  |  25000 |
++--------+--------+
+It fetches all the records of the employees who are getting less than 25k salary.
+
+Correlated Sub Query:
+Simply means Dependency
+The Sub query depends on the outer query.
+mysql> select eid,ename,salary,city from employee e where salary>(select avg(salary) from employee where city=e.city);
++------+--------+--------+-------+
+| eid  | ename  | salary | city  |
++------+--------+--------+-------+
+|    6 | Kusuma |  26000 | Pune  |
+|    7 | Sanjay |  46000 | Bnglr |
++------+--------+--------+-------+
+Note: Here the employee has the same city but with that only returns the greater than avg salary from employee table.
+
+EXISTS: The output for this is TRUE/FALSE 
+It is simply to check whether the data is existed or not.
+mysql> select ename,salary,city from employee e where EXISTS (select * f
+rom department d where e.eid=d.eid);
++--------+--------+---------+
+| ename  | salary | city    |
++--------+--------+---------+
+| crish  |   3000 | Bnglr   |
+| krish  |  40000 | Delhi   |
+| pranav |  25000 | Chennai |
+| Tej    |  50000 | Mumbai  |
+| Kusuma |  26000 | Pune    |
++--------+--------+---------+
+NOT EXISTS:
+mysql> select ename,salary,city from employee e where NOT EXISTS (select
+ * from department d where e.eid=d.eid);
++--------+--------+-------+
+| ename  | salary | city  |
++--------+--------+-------+
+| Ashok  |  25000 | Pune  |
+| Sanjay |  46000 | Bnglr |
++--------+--------+-------+
