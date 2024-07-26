@@ -1025,3 +1025,44 @@ mysql> select ename,salary,city from employee e where NOT EXISTS (select
 | Ashok  |  25000 | Pune  |
 | Sanjay |  46000 | Bnglr |
 +--------+--------+-------+
+-----------------------------
+Day 8
+-----------------------------
+Keys:
+1) Unique Key: If a value is uniquely defined there are no duplicates in that particular column.
+          Example: Student Roll No, Email, Mobile No
+          Note: The unique key can allow NULL but only for the one record i.e, more than one record NOT NULL
+          If you donot want to allow the duplicates in a particular column, we use UNIQUE Key.
+          Two records doesnot want to maintain identical information,it stores only distinct information.
+  Syntax: create table table_name(col1 dt1,col2 dt2,...,coln dtn UNIQUE);
+  Here we are assigning the UNIQUE key for the column n.
+          create table table_name(col1 dt1,col2 dt2,...,coln,UNIQUE(col1,col3));
+          Here we are assigning the UNIQUE key for the multiple columns.
+
+Ex: UNIQUE
+mysql> create table std (sid int NOT NULL UNIQUE,sname varchar(20),age i
+nt,city varchar(15));
+mysql> insert into std (sid,sname,age,city) values (1,'krishna',23,'HDP'
+);
+mysql> insert into std (sid,sname,age,city) values (1,'ashok',28,'BNGLR');
+ERROR 1062 (23000): Duplicate entry '1' for key 'std.sid'
+
+To display full info about the table use 
+mysql> show index from table_name;
+constraint -> condition (Giving the constraint name to easily modify the keys in future)
+mysql> create table std1 (sid int,sname varchar(20),age int,city varchar(15),phno int,constraint sid_phno UNIQUE(sid,phno));
+mysql> show index from std1;
++-------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++-------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| std1  |          0 | sid_phno |            1 | sid         | A         |           0 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
+| std1  |          0 | sid_phno |            2 | phno        | A         |           0 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
++-------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+mysql> alter table std1 drop index sid_phno;
+mysql> show index from std1;
+Empty set (0.01 sec)
+
+
+20:43
+
+
