@@ -1370,4 +1370,102 @@ mysql> show GRANTS for krishna@localhost;
 +---------------------------------------------+
 By default, it allocates all the root permissions for the user.
 
-41:18
+2) Giving privileges to a particular DB as
+mysql> GRANT ALL ON practice.* TO krishna@localhost;
+mysql> show grants for krishna@localhost;
++---------------------------------------------------------------+
+| Grants for krishna@localhost                                  |
++---------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `krishna`@`localhost`                   |
+| GRANT ALL PRIVILEGES ON `practice`.* TO `krishna`@`localhost` |
++---------------------------------------------------------------+
+When you give root access i.e *.* to a user
+mysql> GRANT ALL ON *.* TO krishna@localhost;
+mysql> show grants for krishna@localhost;
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Grants for krishna@localhost
+
+
+
+
+
+
+
+
+
+                                |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, RELOAD, SHUTDOWN, PROCESS, FILE, REFERENCES, INDEX, ALTER, SHOW DATABASES, SUPER, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, REPLICATION SLAVE, REPLICATION CLIENT, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, CREATE USER, EVENT, TRIGGER, CREATE TABLESPACE, CREATE ROLE, DROP ROLE ON *.* TO `krishna`@`localhost`
+
+
+
+
+                                |
+| GRANT APPLICATION_PASSWORD_ADMIN,AUDIT_ABORT_EXEMPT,AUDIT_ADMIN,AUTHENTICATION_POLICY_ADMIN,BACKUP_ADMIN,BINLOG_ADMIN,BINLOG_ENCRYPTION_ADMIN,CLONE_ADMIN,CONNECTION_ADMIN,ENCRYPTION_KEY_ADMIN,FIREWALL_EXEMPT,FLUSH_OPTIMIZER_COSTS,FLUSH_STATUS,FLUSH_TABLES,FLUSH_USER_RESOURCES,GROUP_REPLICATION_ADMIN,GROUP_REPLICATION_STREAM,INNODB_REDO_LOG_ARCHIVE,INNODB_REDO_LOG_ENABLE,PASSWORDLESS_USER_ADMIN,PERSIST_RO_VARIABLES_ADMIN,REPLICATION_APPLIER,REPLICATION_SLAVE_ADMIN,RESOURCE_GROUP_ADMIN,RESOURCE_GROUP_USER,ROLE_ADMIN,SENSITIVE_VARIABLES_OBSERVER,SERVICE_CONNECTION_ADMIN,SESSION_VARIABLES_ADMIN,SET_USER_ID,SHOW_ROUTINE,SYSTEM_USER,SYSTEM_VARIABLES_ADMIN,TABLE_ENCRYPTION_ADMIN,TELEMETRY_LOG_ADMIN,XA_RECOVER_ADMIN ON *.* TO `krishna`@`localhost` |
+| GRANT ALL PRIVILEGES ON `practice`.* TO `krishna`@`localhost`
+
+
+
+
+
+
+
+
+
+                                |
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+ 
+
+To remove all privileges you assigned use
+mysql> flush privileges;
+
+To remove a user 
+mysql> drop user krishna@localhost;
+mysql> select user from mysql.user;
++------------------+
+| user             |
++------------------+
+| mysql.infoschema |
+| mysql.session    |
+| mysql.sys        |
+| root             |
++------------------+
+Successfully dropped the user krishna@localhost.
+To check you are which user,
+mysql> select user();
++----------------+
+| user()         |
++----------------+
+| root@localhost |
++----------------+
+
+To switch from root user to krishna@localhost:
+mysql> create user if not exists krishna@localhost identified by 'krishn
+a963';
+mysql> show grants for krishna@localhost;
++---------------------------------------------+
+| Grants for krishna@localhost                |
++---------------------------------------------+
+| GRANT USAGE ON *.* TO `krishna`@`localhost` |
++---------------------------------------------+
+mysql> select user from mysql.user;
++------------------+
+| user             |
++------------------+
+| krishna          |
+| mysql.infoschema |
+| mysql.session    |
+| mysql.sys        |
+| root             |
++------------------+
+mysql> select user();
++----------------+
+| user()         |
++----------------+
+| root@localhost |
++----------------+
+Switch from root to krishna:
+---------------------------------------
+DAY 11
+------------
+
+
