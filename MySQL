@@ -1296,3 +1296,78 @@ mysql> show indexes from user;
 +-------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
 To drop an INDEX from the table:
 mysql> drop index username on user;
+------------------------------------------------
+Day 10
+----------------------------
+VIEW: 
+------
+View is used to a Virtual Table,
+
+Assume a table that contains very large amount of data, we have to retrieve some data from that
+  table so that we can do some operations on some part of a table instead of doing or retriving the entire data,
+  first iam getting required part from it on that table i perform my operations.
+-> It improves the performance speed of the queuing.
+Syntax to Create a View:
+>> create view view_name AS select col1,col2,..coln from table_name; 
+>> select * from view_name;
+
+Ex: mysql> create view sample1 AS select username,email from user;
+mysql> select * from sample1;
++----------+-------------------+
+| username | email             |
++----------+-------------------+
+| krishna  | krishna@gmail.com |
+| ashok    | ashok@gmail.com   |
++----------+-------------------+
+We can update the records in the view as 
+mysql> update sample1 set email='krishna963@gmail.com' where username='k
+rishna';
+If you update any record in the view, it's also updated in the original table.
+>>drop view view_name;
+>>drop view if exists view_name; (It doesn't thrown an error if the view was not present in the DB)
+
+Creation of Users with some Access Permissions:
+-----------------------------------------------
+>>create user IF NOT EXISTS new_username identified by 'password';
+Generally the new_username/accountname consits of two parts
+-> username@hostname 
+
+To check the users in the DB
+mysql> select user from mysql.user;
++------------------+
+| user             |
++------------------+
+| mysql.infoschema |
+| mysql.session    |
+| mysql.sys        |
+| root             |
++------------------+
+
+mysql> create user krishna@localhost identified by 'krishna963';
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create user IF NOT EXISTS krishna@localhost identified by 'krishna963';
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+If we use IF NOT EXISTS it does not thrown error it just shows warning.
+
+Granting Permissions/Privileges to the user
+--------------------------------------------
+>>grant privileges ON object TO username;
+object -> levels of permissions
+Privilege Levels:
+1)GLOBAL: GRANT ALL ON *.* TO username/krsihna@localhost;
+2)DATABASE:Provide permissions to a specific DB: GRANT ALL ON databasename.* TO username;
+3)TABLE: We are proving permissions on all the columns in the given table: GRANT ALL ON DB.table_name TO username;
+At the place of ALL we can give UPDATE for only update operatins for the user and DELETE for only delete operations.
+4)COLUMN: GRANT select(col),insert(col2),update(col3) ON DB.table_name TO username;
+
+To check whatever the permissions are there for the user:
+mysql> show GRANTS for krishna@localhost;
++---------------------------------------------+
+| Grants for krishna@localhost                |
++---------------------------------------------+
+| GRANT USAGE ON *.* TO `krishna`@`localhost` |
++---------------------------------------------+
+By default, it allocates all the root permissions for the user.
+
+41:18
