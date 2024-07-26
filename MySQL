@@ -1029,6 +1029,8 @@ mysql> select ename,salary,city from employee e where NOT EXISTS (select
 Day 8
 -----------------------------
 Keys:
+UNIQUE KEY
+-----------
 1) Unique Key: If a value is uniquely defined there are no duplicates in that particular column.
           Example: Student Roll No, Email, Mobile No
           Note: The unique key can allow NULL but only for the one record i.e, more than one record NOT NULL
@@ -1061,8 +1063,236 @@ mysql> show index from std1;
 mysql> alter table std1 drop index sid_phno;
 mysql> show index from std1;
 Empty set (0.01 sec)
+--------------------------------------------------
+Primary Key:
+------------
+The main goal is to identify a record uniquely in the table, simply means it doesnot allow duplicates.
+Note: The Primary Key cannot be NULL.
+      A Table consists of only one PRIMARY KEY
+      Remove duplicates
 
+Difference between UNIQUE and PRIMARY Key is 
+In the UNIQUE Key one NULL is allowed in the column, if NULL is there in the column it is not used for identify a record.
+Whereas in the PRIMARY Key even single NULL is allowed on that particular column suppose which field you want to makes as a primary key on that
+  particular single value is NOT NULL.
+Syntax: create table table_name (col1 dt1, col2 dt2 PRIMARY KEY, col3 dt3,...., coln dtn);
+        create table table_name (col1 dt1, col2 dt2, col3 dt3,...., coln dtn, PRIMARY KEY(col1,col3));
 
-20:43
+mysql> create table std2 (sid int PRIMARY KEY,sname varchar(20),age int,
+city varchar(15));
+mysql> desc std2;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| sid   | int         | NO   | PRI | NULL    |       |
+| sname | varchar(20) | YES  |     | NULL    |       |
+| age   | int         | YES  |     | NULL    |       |
+| city  | varchar(15) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+If we use Primary Key for a field by default it doesnot accept NULL values.
 
+Using AUTO_INCREMENT
+---------------------
+mysql> create table std3(sid int AUTO_INCREMENT PRIMARY KEY,sname varcha
+r(20),age int);
+mysql> insert into std3(sid,sname,age) values (1,'krishna',23);
+Query OK, 1 row affected (0.01 sec)
+mysql> insert into std3(sname,age) values ('ashok',28);
+Query OK, 1 row affected (0.01 sec)
 
+mysql> select * from std3;
++-----+---------+------+
+| sid | sname   | age  |
++-----+---------+------+
+|   1 | krishna |   23 |
+|   2 | ashok   |   28 |
++-----+---------+------+
+Even though we are not giving the sid in the second step but it is auto incremented, i.e. the purpose of AUTO_INCREMENT
+
+Assinging PRIMARY KEY to Multiple columns
+mysql> create table std4(sid int,sname varchar(20),phno int,PRIMARY KEY(sid,phno));
+mysql> desc std4;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| sid   | int         | NO   | PRI | NULL    |       |
+| sname | varchar(20) | YES  |     | NULL    |       |
+| phno  | int         | NO   | PRI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+
+There is a table in the DG called emp, while the table creation i forgot to give the PRIMARY KEY for this, now we will alter this
+mysql> desc emp;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| EID    | int         | YES  |     | NULL    |       |
+| EName  | varchar(20) | YES  |     | NULL    |       |
+| salary | float       | YES  |     | NULL    |       |
+| city   | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+mysql> alter table emp add PRIMARY KEY(eid);
+mysql> desc emp;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| EID    | int         | NO   | PRI | NULL    |       |
+| EName  | varchar(20) | YES  |     | NULL    |       |
+| salary | float       | YES  |     | NULL    |       |
+| city   | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+
+Removing the PRIMARY KEY:
+mysql> desc std4;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| sid   | int         | NO   | PRI | NULL    |       |
+| sname | varchar(20) | YES  |     | NULL    |       |
+| phno  | int         | NO   | PRI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+mysql> alter table std4 drop PRIMARY KEY;
+mysql> desc std4;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| sid   | int         | NO   |     | NULL    |       |
+| sname | varchar(20) | YES  |     | NULL    |       |
+| phno  | int         | NO   |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+
+COMPOSITE KEY:
+--------------
+Combination of two or more columns that is used to identify a row in a table uniquely.
+Note: we can have any no.of COMPOSITE KEYS for a table.
+Ex: create table std4(sid int,sname varchar(20),phno int,PRIMARY KEY(sid,phno));
+Combination of these are called COMPOSITE.
+sid      phno
+1        123
+2        456
+1        789
+4        123
+This data is allowed because here the combination of sid and phno is made as PRIMARY KEY .
+
+FOREIGN KEY / Reference Key
+------------
+It is used to provide a link between other tables.
+If you want to make a link between multiple tables we use FOREIGN KEY.
+NOTE: The Primary key of one table matches with a key of another table it is called Foreign Key.
+      While creating the Foreign key you need to mention the constraint name.
+
+CASCADE: 
+When you CASCADE, if one record is updated/deleted in a parent table that should immediately effects in the child table too.
+
+SET NULL:
+If you did any modification in the parent table then that record should be change to NULL in the child table.
+
+RESTRICT:
+Whatever the modification we done at the parent table that doesnot affects the child table.
+---------------------------------------
+Day 9
+----------------------------------------
+A Primary key of one table acts as a Foreign key of another table.
+mysql> create table student1(sid int auto_increment primary key,sname varchar(20) not null);
+mysql> desc student1;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| sid   | int         | NO   | PRI | NULL    | auto_increment |
+| sname | varchar(20) | NO   |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+mysql> create table department1(did int auto_increment primary key,dname
+ varchar(20),sid int,foreign key(sid) references student1(sid));
+
+mysql>  alter table department1 add constraint fk_dep foreign key(sid) r
+eferences student1(sid) on delete cascade on update cascade;
+Now, if you modify any record in a parent table(student1) it will automatically affects in the child table(department1).
+
+mysql> insert into student1 values(1,'krishna');
+mysql> select * from student1;
++-----+---------+
+| sid | sname   |
++-----+---------+
+|   1 | krishna |
+|   2 | ashok   |
+|   3 | kusuma  |
++-----+---------+
+mysql> insert into department1(dname,sid) values('CSE',2);
+mysql> select * from department1;
++-----+-------+------+
+| did | dname | sid  |
++-----+-------+------+
+|   1 | CSE   |    2 |
+|   2 | ECE   |    1 |
+|   3 | MCA   |    3 |
++-----+-------+------+
+mysql> delete from student1 where sid=2;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`practice`.`department1`, 
+  CONSTRAINT `department1_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `student1` (`sid`))
+
+mysql> delete from department1 where sid=2;
+mysql> select * from department1;
++-----+-------+------+
+| did | dname | sid  |
++-----+-------+------+
+|   2 | ECE   |    1 |
+|   3 | MCA   |    3 |
++-----+-------+------+
+mysql> select * from student1;
++-----+---------+
+| sid | sname   |
++-----+---------+
+|   1 | krishna |
+|   2 | ashok   |
+|   3 | kusuma  |
++-----+---------+
+We can't directly delete a record from the parent table, but we can delete a record from the child and no changes were made in the parent table.
+But we can add records to the parent table.
+---------------------------------------------------
+Index:
+-------
+The main purpose of INDEX is to speed up the operations mainly on SELECT Operations.
+To speed the retrieval process we use additional field called INDEX.
+Using INDEX we can retrieve the information very fastly.
+""""To increase the speed of retrieval""""
+The INDEX is applied to the Primary Key.
+Example for creating the INDEX:
+--------------
+mysql> create table user(uid int auto_increment primary key,username var
+char(30) not null, email varchar(30) not null, index(username));
+Here the Primary Key(uid) is called Primary Index and username is called Regular Index.
+
+Syntax another type: create index index_name on table_name(col_name);
+                     create index stu_ind on student(sname);
+or
+>>alter table table_name add index index_name(col_name);
+
+mysql> insert into user(username,email) values('krishna','krishna@gmail.com');
+mysql> insert into user(username,email) values('ashok','ashok@gmail.com');
+mysql> select * from user;
++-----+----------+-------------------+
+| uid | username | email             |
++-----+----------+-------------------+
+|   1 | krishna  | krishna@gmail.com |
+|   2 | ashok    | ashok@gmail.com   |
++-----+----------+-------------------+
+Even though the index is not showing you but it is performed at the retrieval time.
+i.e, if you execute a large query normally it takes sometime to return the result, but if you use index the retrieval of the info is faster.
+
+>> explain select * from user;
+mysql> explain select * from department1 where sid=1 and did=2;
++----+-------------+-------------+------------+-------+----------------+---------+---------+-------+------+----------+-------+
+| id | select_type | table       | partitions | type  | possible_keys  | key     | key_len | ref   | rows | filtered | Extra |
++----+-------------+-------------+------------+-------+----------------+---------+---------+-------+------+----------+-------+
+|  1 | SIMPLE      | department1 | NULL       | const | PRIMARY,fk_dep | PRIMARY | 4       | const |    1 |   100.00 | NULL  |
++----+-------------+-------------+------------+-------+----------------+---------+---------+-------+------+----------+-------+
+
+mysql> show indexes from user;
++-------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++-------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| user  |          0 | PRIMARY  |            1 | uid         | A         |           2 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| user  |          1 | username |            1 | username    | A         |           2 |     NULL |   NULL |      | BTREE      |         |
+         | YES     | NULL       |
++-------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+To drop an INDEX from the table:
+mysql> drop index username on user;
