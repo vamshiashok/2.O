@@ -1352,6 +1352,7 @@ If we use IF NOT EXISTS it does not thrown error it just shows warning.
 
 Granting Permissions/Privileges to the user
 --------------------------------------------
+GRANT: GRANT is used to give the privileges to the user.
 >>grant privileges ON object TO username;
 object -> levels of permissions
 Privilege Levels:
@@ -1464,8 +1465,192 @@ mysql> select user();
 | root@localhost |
 +----------------+
 Switch from root to krishna:
----------------------------------------
+
+
+---------------------------------------------------------------------
 DAY 11
 ------------
+REVOKE:
+-------
+REVOKE is used to retrieve the permissions back from the user.
+>REVOKE privilege_name ON object from username;
+object -> DB/table/column....
+Create a user:
+mysql> create user krishna1@localhost identified by 'krishna963';
+Assign some permissions:Giving permission on college database
+mysql> GRANT ALL ON college.* TO krishna1@localhost;
+To check the permissions for a user
+mysql> show grants for krishna1@localhost;
++---------------------------------------------------------------+
+| Grants for krishna1@localhost                                 |
++---------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `krishna1`@`localhost`                  |
+| GRANT ALL PRIVILEGES ON `college`.* TO `krishna1`@`localhost` |
++---------------------------------------------------------------+
+Revoking the permissions back we assigned:
+mysql> REVOKE ALL ON college.* from krishna1@localhost;
+mysql> show grants for krishna1@localhost;
++----------------------------------------------+
+| Grants for krishna1@localhost                |
++----------------------------------------------+
+| GRANT USAGE ON *.* TO `krishna1`@`localhost` |
++----------------------------------------------+
+mysql> GRANT insert,update,select ON college.* TO krishna1@localhost;
+mysql> show grants for krishna1@localhost;
++-----------------------------------------------------------------------+
+| Grants for krishna1@localhost
+|
++-----------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `krishna1`@`localhost`
+|
+| GRANT SELECT, INSERT, UPDATE ON `college`.* TO `krishna1`@`localhost` |
++-----------------------------------------------------------------------+
+
+mysql> REVOKE select,update,insert ON college.* from krishna1@localhost;
+mysql> show grants for krishna1@localhost;
++----------------------------------------------+
+| Grants for krishna1@localhost                |
++----------------------------------------------+
+| GRANT USAGE ON *.* TO `krishna1`@`localhost` |
++----------------------------------------------+
+TCL Commands:
+-------------
+1)SAVE POINT:
+-----------
+Wherever you left, you can again start from that point.
+>SAVEPOINT name_of_the_savepoint;
+2)ROLL BACK:
+----------
+Moving back to the SAVE POINT position 
+>ROLLBACK TO SAVEPOINT name_of_the_savepoint;
+RELEASE SAVEPOINT:
+-----------------
+If you donot require the savepoint anymore you can release the savepoint.
+If you release the savepoint then rollback opertion can't be performed anymore.
+
+To start a transaction we use "BEGIN" or "START"
+1)create a transaction
+2)create a savepoint
+
+mysql> start transaction;
+mysql> savepoint sp1;
+Inserting record to an existing table
+mysql> insert into emp values(10,'abc',10000,'sbd');
+mysql> select * from emp;
++------+---------+--------+---------+
+| eid  | ename   | salary | city    |
++------+---------+--------+---------+
+|    1 | crish   |  30000 | Bnglr   |
+|    2 | krish   |  40000 | Delhi   |
+|    3 | pranav  |  25000 | Chennai |
+|    4 | Tej     |  50000 | Mumbai  |
+|    5 | Ashok   |  25000 | Pune    |
+|    6 | kusuma  |  26000 | Pune    |
+|    7 | crishna |  46000 | Bnglr   |
+|   10 | abc     |  10000 | sbd     |
++------+---------+--------+---------+
+After insertion create one more savepoint
+mysql> savepoint sp2;
+After that update a record in that table
+mysql> update emp set salary=20000 where eid=10;
+mysql> select * from emp;
++------+---------+--------+---------+
+| eid  | ename   | salary | city    |
++------+---------+--------+---------+
+|    1 | crish   |  30000 | Bnglr   |
+|    2 | krish   |  40000 | Delhi   |
+|    3 | pranav  |  25000 | Chennai |
+|    4 | Tej     |  50000 | Mumbai  |
+|    5 | Ashok   |  25000 | Pune    |
+|    6 | kusuma  |  26000 | Pune    |
+|    7 | crishna |  46000 | Bnglr   |
+|   10 | abc     |  20000 | sbd     |
++------+---------+--------+---------+
+Create one more savepoint.
+mysql> savepoint sp3;
+After that delete a record.
+mysql> delete from emp where eid=7;
+After create one more savepoint 
+mysql> savepoint sp4;
+
+After creating the transaction - sp1
+after insertion - sp2
+after udpate - sp3
+after delete - sp4
+
+Now  ROLLBACK to sp3
+mysql> rollback to sp3;
+mysql> select * from emp;
++------+---------+--------+---------+
+| eid  | ename   | salary | city    |
++------+---------+--------+---------+
+|    1 | crish   |  30000 | Bnglr   |
+|    2 | krish   |  40000 | Delhi   |
+|    3 | pranav  |  25000 | Chennai |
+|    4 | Tej     |  50000 | Mumbai  |
+|    5 | Ashok   |  25000 | Pune    |
+|    6 | kusuma  |  26000 | Pune    |
+|    7 | crishna |  46000 | Bnglr   |
+|   10 | abc     |  20000 | sbd     |
++------+---------+--------+---------+
+Even though we deleted the eid=7 record but we are rolled back to the sp3 i.e, after the updation of salary from 10k to 20k.
+It means whatever the operations are done by the user after the sp3 those all will be undone.
+
+After that delete a record
+mysql> delete from emp where eid=6;
+And we are commit the database
+mysql> commit;
+mysql> rollback to sp3;
+ERROR 1305 (42000): SAVEPOINT sp3 does not exist
+Once you commit to the database, you are not able to rollback.It is not possible to rollback after the commit.
+Release the savepoint from the DB
+mysql> release savepoint sp_ins;
+If you try to rollback to the savpoint that you released.
+mysql> rollback to sp_ins;
+ERROR 1305 (42000): SAVEPOINT sp_ins does not exist
+
+ACID Properties:
+----------------
+Atomicity (All or None)
+Consistency (The database changes from one valid state into another valid state)
+Isolation (only one thing, if multiple transactions are concurrently doing and one transaction doesn't depend on the other transactrion)
+Durability (Once the transaction is commited all those are permanently updated in the database)
+
+To set the isolation:
+---------------------
+>> set transaction isolation level;
+levels -> read uncommited means the transaction can change made by any other uncommited transactions
+
+-------------------------------------------------------------
+Day 12
+------------------
+PROCEDURE:
+STORED PROCEDURE:
+Collection of pre-compiled statements.
+i.e, I want to do some multiple set of operations instead of writing each and everytime i written a procedure
+  whenever i need simply call that procedure.
+The main advantage is it increases the performance of the query/statement.
+
+Creating a Procedure:
+---------------------
+>>Delimiter &&
+  create procedure name_of_the_procedure [IN/OUT/INOUT] [name_of_the_parameter datatype]
+  BEGIN
+        declaration (variables)
+        executable_stmnts (code)
+  END&&
+  Delimiter;
+Calling the procedure:
+----------------------
+>call procedurename(parameters);
+
+mysql> delimiter &&
+mysql> create procedure get_maxsalary()
+    -> begin
+    -> select * from emp where city='Chennai';
+    -> end &&
+Query OK, 0 rows affected (0.03 sec)
+
+
 
 
