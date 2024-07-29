@@ -1649,8 +1649,72 @@ mysql> create procedure get_maxsalary()
     -> begin
     -> select * from emp where city='Chennai';
     -> end &&
+mysql> delimiter;
 Query OK, 0 rows affected (0.03 sec)
 
+call the procedure,
+mysql> call get_maxsalary();
++------+--------+--------+---------+
+| eid  | ename  | salary | city    |
++------+--------+--------+---------+
+|    3 | pranav |  25000 | Chennai |
++------+--------+--------+---------+
 
+Passing arguments to the procedure,
+mysql> delimiter &&
+mysql> create procedure get_eid(IN a int)
+    -> begin
+    -> select * from emp limit a;
+    -> end &&
+mysql> call get_eid(5);
+    -> &&
++------+--------+--------+---------+
+| eid  | ename  | salary | city    |
++------+--------+--------+---------+
+|    1 | crish  |  30000 | Bnglr   |
+|    2 | krish  |  40000 | Delhi   |
+|    3 | pranav |  25000 | Chennai |
+|    4 | Tej    |  50000 | Mumbai  |
+|    5 | Ashok  |  25000 | Pune    |
++------+--------+--------+---------+
+Session Variables: Whatever the parameters that are calling from the procudure those are called Session variables.
+                   Generally they are represented by using '@' symbol.
 
+mysql> delimiter &&
+mysql> create procedure high_sal(OUT maxsal float)
+    -> begin
+    -> select max(salary) into maxsal from emp;
+    -> end &&
+mysql> delimiter &&
+mysql> call high_sal(@M);
+    -> select @M;
+    -> &&
+Query OK, 1 row affected (0.01 sec)
+
++-------+
+| @M    |
++-------+
+| 50000 |
++-------+
+Here the Session variable is 'M'. which holds the queries output and prints in the terminal.
+To display all the procedures in a DB,
+mysql> show procedure status where db='college';
+    -> &&
++---------+---------------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+| Db      | Name          | Type      | Definer        | Modified            | Created             | Security_type | Comment | character_set_client | collation_connection | Database Collation |
++---------+---------------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+| college | display_sal   | PROCEDURE | root@localhost | 2024-07-29 10:33:22 | 2024-07-29 10:33:22 | DEFINER       |         | cp850
+    | cp850_general_ci     | utf8mb4_0900_ai_ci |
+| college | get_eid       | PROCEDURE | root@localhost | 2024-07-29 10:16:48 | 2024-07-29 10:16:48 | DEFINER       |         | cp850
+    | cp850_general_ci     | utf8mb4_0900_ai_ci |
+| college | get_maxsalary | PROCEDURE | root@localhost | 2024-07-27 14:36:47 | 2024-07-27 14:36:47 | DEFINER       |         | cp850
+    | cp850_general_ci     | utf8mb4_0900_ai_ci |
+| college | high_sal      | PROCEDURE | root@localhost | 2024-07-29 10:23:03 | 2024-07-29 10:23:03 | DEFINER       |         | cp850
+    | cp850_general_ci     | utf8mb4_0900_ai_ci |
+| college | same_sal      | PROCEDURE | root@localhost | 2024-07-29 09:56:38 | 2024-07-29 09:56:38 | DEFINER       |         | cp850
+    | cp850_general_ci     | utf8mb4_0900_ai_ci |
++---------+---------------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+
+To drop  a procedure,
+mysql> drop procedure get_maxsalary;
 
