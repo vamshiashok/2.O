@@ -1,0 +1,17 @@
+What is Incident Management?
+------------------------------
+The main objective of Incident Management is to minize IT disruptions and restore services immediately.
+  In some cases, change implementations can lead to incidents, most of which are minor incidents caused by temporary service disruptions or service unavailability.
+
+
+Incident management is a collection of policies, processes, workflows, and documentation that helps IT teams manage an incident from start to finish. 
+  The process of incident management involves identifying an incident, logging it with all the relevant information, diagnosing the issue, and restoring the service in a timely manner. 
+
+What is Change Management?
+--------------------------
+IT change management is the process of modifying the IT infrastructure of an organization in a standardized and systematic manner. 
+  It is a well-planned process comprised of various stages and statuses that IT changes can go through.
+
+Typically, IT changes are initiated after the IT problem management processes to fix the identified IT problem, 
+  to replace a faulty asset that leads to repeat incidents, or as a part of the resolution to a major incident. 
+  The objective of IT incident management is to minimize IT disruptions and restore services immediately.
