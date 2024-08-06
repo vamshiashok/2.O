@@ -15,3 +15,38 @@ IT change management is the process of modifying the IT infrastructure of an org
 Typically, IT changes are initiated after the IT problem management processes to fix the identified IT problem, 
   to replace a faulty asset that leads to repeat incidents, or as a part of the resolution to a major incident. 
   The objective of IT incident management is to minimize IT disruptions and restore services immediately.
+
+----------------------------------------------------------------------
+INCIDENT MANAGEMENT:
+--------------------
+-> An unplanned interruption to an IT Service or reduction in the quality of an IT Service or a failure of a configuration item that has 
+    not yet impacted an IT Service.
+-> The first goal of the incident management process is
+  a) To restore a normal service operation as quickly as possible.
+  b) To minimize the impact on business operations, thus ensuring that the best possible levels of service quality and availability are maintained.
+
+PROBLEM MANAGEMENT:
+-------------------
+-> A Problem is a condition often identified as a result of multiple incidents that exhibit common symptoms.
+-> A "Problem" the unknown underlying cause of one or more incidents, and a "known error" is a problem that is successfully 
+    diagnosed and for which either a work-around or a permanent resolution has been identified.
+-> Problem Management aims to resolve the root cause of incidents and thus to minimize the adverse impact of incidents caused by errors within the 
+    IT infrastructure and to prevent recurrence of incidents related to these errors.
+
+CHANGE MANAGEMENT:
+------------------
+-> The addition, modification or removal of CI's(Configuration Item).
+-> A Change is an event that results in a new status of one or more configuration items (CIs) and which is
+    -> Approved by management
+    -> Cost effective
+    -> Enhances Business Process Changes
+-> Businesses have two main expectations of the services provided by IT,
+    -> The service should be stable, reliable and predictable.
+    -> The services should be able to change rapidly to meet evolving business requirements.
+-> The objective of Change Management is
+    -> To enable IT Service Management to meet both expectation &
+    -> To enable rapid change while minimizing the possibility of disruption to services.
+-> It ensure the standardized methods and procedures are used for efficient handling of all changes.
+-> A CI(Configuration Item) is any service component, infrastructure element or other item that needs to be managed 
+    in order to ensure the successful delivery of services.
+
